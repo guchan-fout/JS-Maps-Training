@@ -3,6 +3,8 @@ A self training for checking how much I learned from onboarding course.
 Since I am new to JavaScript, so I chose to make a JS based demo.
 It's a map to show Japan covid-19 quasi-emergency prefectures.
 
+* quasi-emergency is OUT-OF-TIME, this is just for training not real data!
+
 > refered :https://docs.mapbox.com/help/tutorials/choropleth-studio-gl-pt-1/
 ## What I did
 
@@ -16,6 +18,8 @@ The geojson file was too big(18Mb) to do it on Studio dataset, so made it to a t
 
 ### 3.Use expression
 * Use `Sytle across data range` or `Style with data conditions` also works but I tried API level this time.
+
+* Basically use `addLayer` will be normal but I want to try `setPaintProperty` to see if it works.
 
 * Found (this)[https://github.com/mapbox/mapbox-gl-js/issues/9862], said `setPaintProperty` couldn't re-render the layer. But I tried and looks fine.
 
