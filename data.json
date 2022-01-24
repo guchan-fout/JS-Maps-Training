@@ -1,22 +1,22 @@
 [
-  {
-    "place": "Tokyo To",
-    "emergency": 1
-  },
-  {
-    "place": "Chiba Ken",
-    "emergency": 1
-  },
-  {
-    "place": "Osaka Fu",
-    "emergency": 1
-  },
-  {
-    "place": "Kyouto Fu",
-    "emergency": 1
-  },
-  {
-    "place": "Ibaraki Ken",
-    "emergency": 1
-  }
+   {
+      "place":"Tokyo To",
+      "emergency":1
+   },
+   {
+      "place":"Chiba Ken",
+      "emergency":1
+   },
+   {
+      "place":"Osaka Fu",
+      "emergency":1
+   },
+   {
+      "place":"Kyouto Fu",
+      "emergency":1
+   },
+   {
+      "place":"Ibaraki Ken",
+      "emergency":1
+   }
 ]
