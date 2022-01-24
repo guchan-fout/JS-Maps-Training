@@ -65,7 +65,7 @@
       style: 'mapbox://styles/chan-gu/ckyo0ylv12lcv15qo1zvi5n36',
       center: [139.7783, 35.7426],
       minZoom: 6,
-      maxZoom: 6,
+      //maxZoom: 6,
       zoom: 6
     });
 
@@ -101,25 +101,25 @@
       });
 
 
-/*
-      var jsonData;
-      $.getJSON("https://github.com/guchan-fout/JS-Maps-Training/blob/main/data.csv", function(json) {
-        //jsonData = json // this will show the info it in firebug console
-        console.log(json);
-        //var arr = JSON.parse(json);
-        //console.log(jsonData);
-      });
+      /*
+            var jsonData;
+            $.getJSON("https://github.com/guchan-fout/JS-Maps-Training/blob/main/data.csv", function(json) {
+              //jsonData = json // this will show the info it in firebug console
+              console.log(json);
+              //var arr = JSON.parse(json);
+              //console.log(jsonData);
+            });
 
 
-      jsonData= JSON.parse(jsonData);
-      for (let i = 0; i < jsonData.length; ++i) {
-        const element = jsonData[i];
-        console.log(element);
-      }
-      */
+            jsonData= JSON.parse(jsonData);
+            for (let i = 0; i < jsonData.length; ++i) {
+              const element = jsonData[i];
+              console.log(element);
+            }
+            */
 
 
-      var emergencyList = [1,3,6,13,15,17,28];
+      var emergencyList = [1, 3, 6, 13, 15, 17, 28];
       const preflayer = map.getLayer('japan-prefecture')
       const features = map.queryRenderedFeatures({
         layers: [preflayer.id]
@@ -141,11 +141,17 @@
         '#228B22', //for prefecture not announced yet
       ]);
 
+      map.setPaintProperty(preflayer.id, 'fill-color', [
+        'match',
+        ['get', 'id'],
+        emergencyList,
+        '#BD0026', // for prefecture announced the quasi-emergency
+        '#228B22', //for prefecture not announced yet
+      ]);
 
+      map.setPaintProperty(preflayer.id, 'fill-opacity', 0.8)
 
     });
-
-    //const max_expr = ['max', ['get', 'POLY_COLOUR_CODE_D'], ['get', 'POLY_COLOUR_CODE_BW'], ['get', 'POLY_COLOUR_CODE_A']];
   </script>
 </body>
 
