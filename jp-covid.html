@@ -101,7 +101,7 @@
       });
 
 
-      /*
+/*
             var jsonData;
             $.getJSON("https://github.com/guchan-fout/JS-Maps-Training/blob/main/data.csv", function(json) {
               //jsonData = json // this will show the info it in firebug console
@@ -116,8 +116,8 @@
               const element = jsonData[i];
               console.log(element);
             }
-            */
 
+*/
 
       var emergencyList = [1, 3, 6, 13, 15, 17, 28];
       const preflayer = map.getLayer('japan-prefecture')
@@ -132,14 +132,6 @@
       }
       //Tried this to make sure get customer layer works
       //map.setPaintProperty(preflayer.id, 'fill-color', '#800026');
-
-      map.setPaintProperty(preflayer.id, 'fill-color', [
-        'match',
-        ['get', 'id'],
-        emergencyList,
-        '#BD0026', // for prefecture announced the quasi-emergency
-        '#228B22', //for prefecture not announced yet
-      ]);
 
       map.setPaintProperty(preflayer.id, 'fill-color', [
         'match',
