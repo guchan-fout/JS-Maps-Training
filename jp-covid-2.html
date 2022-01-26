@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='utf-8' />
+  <title>Make a heatmap with Mapbox GL JS</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .map-overlay {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: #fff;
+      margin-right: 20px;
+      font-family: Arial, sans-serif;
+      overflow: auto;
+      border-radius: 3px;
+    }
+
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    #legend {
+      padding: 10px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      line-height: 18px;
+      height: 60px;
+      margin-bottom: 20px;
+      width: 240px;
+    }
+
+    .legend-key {
+      display: inline-block;
+      border-radius: 20%;
+      width: 10px;
+      height: 10px;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='map'></div>
+  <div class="map-overlay" id="legend"></div>
+
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY2hhbi1ndSIsImEiOiJja3ZjMGt0dXFhc3RhMndxNnR3M3o2bmgzIn0.iUfIljSfjBVpGu-FkbAIEw';
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/chan-gu/ckytqtxkn000714p0lz2im82p',
+      center: [139.7783, 35.7426],
+      zoom: 6
+    });
+
+    const geojson = {
+      type: 'FeatureCollection',
+      features: [{
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [139.7595261347443, 36.882016338433274]
+          },
+          properties: {
+            title: 'Mapbox',
+            description: 'Tokyo2222'
+          }
+        },
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [139.7595261347443, 35.882016338433274]
+          },
+          properties: {
+            title: 'Mapbox',
+            description: 'Tokyo1111'
+          },
+        },
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [139.7595261347443, 37.882016338433276]
+          },
+          properties: {
+            title: 'Mapbox',
+            description: 'Tokyo333'
+          }
+        }
+      ]
+    };
+
+
+    map.on('load', () => {
+      map.addSource('street', {
+        type: 'vector',
+        url: 'mapbox://mapbox.mapbox-streets-v8'
+      });
+
+      map.addLayer({
+        'id': 'street-layer',
+        'type': 'line',
+        'source': 'street',
+        'source-layer': 'admin',
+        'paint': {
+          'line-color': '#FFFFFF',
+          'line-width': 1
+        }
+      });
+
+      map.addLayer({
+        "id": "airport_label",
+        "source": "street",
+        "source-layer": "airport_label",
+        "type": "circle",
+        "paint": {
+          "circle-radius": 3,
+          "circle-color": "rgba(238,78,139, 0.4)",
+          "circle-stroke-color": "rgba(238,78,139, 1)",
+          "circle-stroke-width": 1
+        }
+      });
+
+      map.addSource('places', {
+        'type': 'geojson',
+        'data': geojson
+      });
+
+      map.addLayer({
+        'id': 'icon',
+        'type': 'symbol',
+        'source': 'places',
+        'layout': {
+          'text-field': ['get', 'description'],
+          'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+          'text-radial-offset': 0.5
+          //'icon-image': ['get', 'icon']
+        },
+        paint: {
+          "text-color": "#D71515"
+        }
+      });
+
+    });
+  </script>
+</body>
+
+</html>
