@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Display a map on a webpage</title>
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+	<link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
+	<script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		#map {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="map"></div>
+	<script>
+		mapboxgl.accessToken = 'pk.eyJ1IjoiY2hhbi1ndSIsImEiOiJja3ZjMGt0dXFhc3RhMndxNnR3M3o2bmgzIn0.iUfIljSfjBVpGu-FkbAIEw';
+		var map;
+
+//Data from my android phone:
+//mCi=24741134 mPci=308 mTac=6218 mEarfcn=475 mBands=[1] mBandwidth=15000 mMcc=440 mMnc=20 mAlphaLong=SoftBank mAlphaShort=SoftBank mAdditionalPlmns={} mCsgInfo=null}
+//SignalStrength,GSM Signal Strength: 99
+//data from GPS:139.7506008, 35.6684339]
+		const mcc = 440;
+		const mnc = 20;
+		const lac = 6218;
+		const cid = 24741134;
+		const psc = 308;
+		const apiKey = 'pk.49fb9a54ce2ab4272962ae0f28c52e31';
+
+		$(document).ready(function() {
+			$.ajax({
+				url: "https://ap1.unwiredlabs.com/v2/process.php",
+				type: "POST",
+				crossDomain: true,
+				headers: {},
+
+				data: JSON.stringify({
+					"token": "pk.49fb9a54ce2ab4272962ae0f28c52e31",
+					"radio": "lte",
+					"mcc": mcc,
+					"mnc": mnc,
+					"cells": [{
+						"lac": lac,
+						"cid": cid,
+						"psc": psc
+					}],
+					"address": 1
+				}),
+				success: function(data) {
+					console.log(data);
+					const latitude = data.lat;
+					const longitude = data.lon;
+					map = new mapboxgl.Map({
+						container: 'map', // container ID
+						// Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+						style: 'mapbox://styles/mapbox/streets-v12', // style URL
+						center: [longitude, latitude], // starting position [lng, lat]
+						zoom: 15 // starting zoom
+					});
+
+					map.on('load', () => {
+						const markerCell = new mapboxgl.Marker({
+							color: '#F84C4C' // color it red
+						});
+						markerCell.setLngLat([longitude, latitude]);
+						markerCell.addTo(map);
+
+						const markerGPS = new mapboxgl.Marker({
+							color: '#03c03c'
+						});
+						markerGPS.setLngLat([139.7506008, 35.6684339]);
+						markerGPS.addTo(map);
+
+					});
+				}
+			});
+		});
+	</script>
+
+</body>
+
+</html>
